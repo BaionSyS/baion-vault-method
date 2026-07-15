@@ -8,7 +8,7 @@
 [![Version](https://img.shields.io/badge/version-0.1.0-5c677d)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**Status:** v0.1.0 release candidate. The repository is built and verified locally; it should not be described as a published release until a public tag exists.
+**Status:** v0.1.0, released 2026-07-15. The public tag [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) is the release record.
 
 BAION Vault Method (BVM) is a reference methodology for maintaining trustworthy project state when humans and AI agents work in the same file-based environment. It separates proposed work from accepted claims, requires addressable evidence before promotion, preserves corrections without erasing history, and ships an executable checker so structural conformance is a command rather than a feeling.
 

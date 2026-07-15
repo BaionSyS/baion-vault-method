@@ -2,7 +2,7 @@
 
 All notable public changes are documented here.
 
-## [0.1.0] — release candidate prepared 2026-07-15
+## [0.1.0] — released 2026-07-15
 
 ### Added
 
@@ -24,4 +24,4 @@ All notable public changes are documented here.
 
 - Structural conformance only; no factual, scientific, legal, security, or safety certification.
 - Reference methodology status; not a standard.
-- Release candidate status until a public repository tag and release record exist.
+- Released with public tag v0.1.0 as the release record.
