@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Please cite the BAION Vault Method repository and the exact version used."
+title: "BAION Vault Method"
+type: software
+authors:
+  - family-names: "Mullins"
+    given-names: "Steven A."
+    name-suffix: "Jr."
+version: 0.1.0
+url: "https://github.com/BaionSyS/baion-vault-method"
+repository-code: "https://github.com/BaionSyS/baion-vault-method"
+abstract: >-
+  A file-based governance layer for human-AI work where agents may propose
+  project state but receipts, separate enforcement, exact-byte review, and
+  explicit promotion establish it.
+keywords:
+  - artificial intelligence
+  - provenance
+  - governance
+  - audit trail
+  - research workflow
+  - agentic systems

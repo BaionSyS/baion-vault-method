@@ -1,0 +1,2 @@
+control=injected-output-difference detection=pass
+SUMMARY controls=1 pass=1 fail=0

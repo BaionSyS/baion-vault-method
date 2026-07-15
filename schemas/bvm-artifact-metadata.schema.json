@@ -1,0 +1,167 @@
+{
+  "$id": "https://github.com/BaionSyS/baion-vault-method/schemas/bvm-artifact-metadata.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "handoff"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "then": {
+        "required": [
+          "current_state",
+          "authority_sources"
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "aggregate": {
+      "additionalProperties": true,
+      "properties": {
+        "unit_receipts": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "units": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "units",
+        "unit_receipts"
+      ],
+      "type": "object"
+    },
+    "artifact_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "authoritative_search_receipt": {
+      "type": "string"
+    },
+    "authority_sources": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "claim_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "created_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "current_state": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "executed_object_receipt": {
+      "type": "string"
+    },
+    "lineage_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "object_mode": {
+      "enum": [
+        "canonical",
+        "proxy",
+        "mixed",
+        "not-applicable"
+      ]
+    },
+    "positive_control_receipt": {
+      "type": "string"
+    },
+    "promotion_receipt": {
+      "type": "string"
+    },
+    "requires_canon_object": {
+      "type": "boolean"
+    },
+    "result": {
+      "enum": [
+        "positive",
+        "negative",
+        "mixed",
+        "inconclusive"
+      ]
+    },
+    "reviews": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "bvm-artifact/0.1"
+    },
+    "state": {
+      "enum": [
+        "working",
+        "canon",
+        "archive",
+        "handoff"
+      ]
+    },
+    "supersedes": {
+      "type": "string"
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "updated_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "artifact_id",
+    "lineage_id",
+    "title",
+    "state",
+    "version",
+    "created_utc",
+    "updated_utc"
+  ],
+  "title": "BVM artifact metadata 0.1",
+  "type": "object"
+}

@@ -1,0 +1,13 @@
+{
+  "applicability_id": "adapter-parity.unit.nested",
+  "captured_utc": "2026-07-15T13:08:00Z",
+  "kind": "unit-check",
+  "receipt_id": "receipt.unit.nested.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Locked probe result for aggregate unit 'nested'.",
+  "source": "RECEIPTS/data/probe-v2.txt",
+  "source_sha256": "df900c31bf33a177eadb35a79f2a26095137b9e7ef91365cfa59ee9573656414",
+  "status": "pass",
+  "subject_id": "artifact.adapter-parity.v1_0_0",
+  "unit_id": "nested"
+}

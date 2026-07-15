@@ -1,0 +1,13 @@
+{
+  "lineages": {
+    "lineage.adapter-parity": {
+      "current": "CANON/bounded-adapter-parity-v1.0.0.md",
+      "promotion": "RECEIPTS/promotions/promote-v1.json",
+      "promotion_sha256": "846556d8ea15394c61205de247414e77b6084034ce267b0504fef310803fe548",
+      "status": "current",
+      "version": "1.0.0"
+    }
+  },
+  "schema": "bvm-index/0.1",
+  "updated_utc": "2026-07-15T13:22:00Z"
+}

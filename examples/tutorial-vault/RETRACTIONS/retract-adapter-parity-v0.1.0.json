@@ -1,0 +1,11 @@
+{
+  "artifact": "ARCHIVE/adapter-parity-observation-v0.1.0.md",
+  "artifact_sha256": "43d0de73a4db251da618aa7586be277e13bcf8c54085a379ff1f42e184ea9f75",
+  "preserve_original": true,
+  "reason": "The original no-divergence claim generalized beyond a corpus containing only valid inputs; duplicate-key behavior was untested.",
+  "replacement": "CANON/bounded-adapter-parity-v1.0.0.md",
+  "replacement_sha256": "98bd5b4776befc8d09e34f7f9af377a237e65081b6f344ad4f3e5b92979f4304",
+  "retracted_utc": "2026-07-15T13:25:00Z",
+  "retraction_id": "retraction.adapter-parity.v0_1_0",
+  "schema": "bvm-retraction/0.1"
+}

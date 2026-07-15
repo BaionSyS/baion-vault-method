@@ -1,0 +1,4 @@
+case=valid-order expected=accept reference=accept candidate=accept parity=pass expectation=pass result={"a":1,"b":2}
+case=nested expected=accept reference=accept candidate=accept parity=pass expectation=pass result={"a":[3,2,1],"z":{"a":1,"b":2}}
+SUMMARY cases=2 pass=2 fail=0
+LIMITATION malformed-input and duplicate-key cases were not included

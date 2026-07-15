@@ -1,0 +1,36 @@
+name: Method proposal
+description: Propose a new rule, receipt, profile, or enforcement mechanism
+title: "[method] "
+labels: ["method"]
+body:
+  - type: textarea
+    id: failure
+    attributes:
+      label: Failure mode or adoption need
+      description: What concrete failure or workflow need motivates this proposal?
+    validations:
+      required: true
+  - type: dropdown
+    id: class
+    attributes:
+      label: Proposed classification
+      options:
+        - Core requirement
+        - Recommended practice
+        - BAION-specific example
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: enforcement
+    attributes:
+      label: Enforcement site
+      description: How would this become more than a prose reminder?
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: What it would not prove
+    validations:
+      required: true

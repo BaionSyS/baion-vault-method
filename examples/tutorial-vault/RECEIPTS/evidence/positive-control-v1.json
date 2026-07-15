@@ -1,0 +1,12 @@
+{
+  "applicability_id": "adapter-parity.harness-detection",
+  "captured_utc": "2026-07-15T12:06:00Z",
+  "kind": "positive-control",
+  "receipt_id": "receipt.positive-control.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Injected output difference detected by the same comparison path.",
+  "source": "RECEIPTS/data/positive-control-v1.txt",
+  "source_sha256": "ce05751330733e94b47e4644a6bf1dd3832426dd1d66b87c883d80e91b0b4c64",
+  "status": "pass",
+  "subject_id": "artifact.adapter-parity.v0_1_0"
+}

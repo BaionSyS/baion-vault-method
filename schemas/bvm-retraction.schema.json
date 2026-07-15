@@ -1,0 +1,58 @@
+{
+  "$id": "https://github.com/BaionSyS/baion-vault-method/schemas/bvm-retraction.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "artifact": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "preserve_original": {
+      "const": true
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "replacement": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "replacement_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "retracted_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "retraction_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "bvm-retraction/0.1"
+    }
+  },
+  "required": [
+    "schema",
+    "retraction_id",
+    "artifact",
+    "artifact_sha256",
+    "retracted_utc",
+    "reason",
+    "replacement",
+    "preserve_original"
+  ],
+  "title": "BVM retraction 0.1",
+  "type": "object"
+}

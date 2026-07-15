@@ -1,0 +1,12 @@
+{
+  "artifact": "CANON/bounded-adapter-parity-v1.0.0.md",
+  "artifact_id": "artifact.adapter-parity.v1_0_0",
+  "artifact_sha256": "98bd5b4776befc8d09e34f7f9af377a237e65081b6f344ad4f3e5b92979f4304",
+  "notes": "Pass for the bounded corpus claim. No conclusion beyond the hash-bound input, executed objects, included fixtures, or recorded runtime.",
+  "review_id": "review.independent.v1",
+  "reviewed_utc": "2026-07-15T13:15:00Z",
+  "reviewer_class": "separate-instance",
+  "schema": "bvm-review/0.1",
+  "scope": "Checked exact artifact bytes against the four-case probe, input snapshot, unit receipts, both executed-object identities, correction boundary, and stated unknowns.",
+  "verdict": "pass"
+}

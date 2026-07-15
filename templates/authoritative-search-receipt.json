@@ -1,0 +1,14 @@
+{
+  "schema": "bvm-receipt/0.1",
+  "receipt_id": "receipt.authoritative-search.replace-me",
+  "subject_id": "artifact.replace-me.v0_1_0",
+  "kind": "authoritative-search",
+  "captured_utc": "2026-07-15T12:00:00Z",
+  "status": "observed",
+  "scope": "State the exact negative-existence claim being tested.",
+  "source": "RECEIPTS/data/authoritative-search-replace-me.txt",
+  "source_sha256": "replace-with-lowercase-sha256",
+  "authority": "Name the primary registry, database, or source.",
+  "procedure": "Record the query or reproducible search procedure.",
+  "boundary": "Record date, filters, jurisdiction, and other search limits."
+}

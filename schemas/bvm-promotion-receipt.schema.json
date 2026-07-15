@@ -1,0 +1,102 @@
+{
+  "$id": "https://github.com/BaionSyS/baion-vault-method/schemas/bvm-promotion-receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "artifact": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "candidate": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "candidate_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "decision_by": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidence_sha256": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "promoted_from": {
+      "enum": [
+        "working",
+        "archive"
+      ]
+    },
+    "promoted_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "promotion_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviews": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "reviews_sha256": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "bvm-promotion/0.1"
+    }
+  },
+  "required": [
+    "schema",
+    "promotion_id",
+    "artifact_id",
+    "artifact",
+    "artifact_sha256",
+    "candidate",
+    "candidate_sha256",
+    "promoted_from",
+    "promoted_utc",
+    "decision_by",
+    "evidence",
+    "reviews",
+    "evidence_sha256",
+    "reviews_sha256"
+  ],
+  "title": "BVM promotion receipt 0.1",
+  "type": "object"
+}

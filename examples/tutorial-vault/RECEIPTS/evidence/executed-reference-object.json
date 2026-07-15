@@ -1,0 +1,14 @@
+{
+  "applicability_id": "adapter-parity.reference-object-v1",
+  "captured_utc": "2026-07-15T13:06:00Z",
+  "kind": "executed-object",
+  "object": "CANON/objects/reference_normalizer.py",
+  "object_sha256": "c4bd7ee0d1d5c09f867b08ee6bbfdbe1e939268efcaecba2ec66157d90ac3304",
+  "receipt_id": "receipt.executed-reference.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "The canonical reference normalizer was imported and executed by the v2 probe.",
+  "source": "RECEIPTS/data/probe-v2.txt",
+  "source_sha256": "df900c31bf33a177eadb35a79f2a26095137b9e7ef91365cfa59ee9573656414",
+  "status": "pass",
+  "subject_id": "artifact.adapter-parity.v1_0_0"
+}

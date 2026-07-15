@@ -1,0 +1,12 @@
+{
+  "applicability_id": "adapter-parity.corpus-v2.input-bytes",
+  "captured_utc": "2026-07-15T13:04:00Z",
+  "kind": "input-snapshot",
+  "receipt_id": "receipt.input-corpus.v2",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Exact four-case TSV input consumed by the v2 probe.",
+  "source": "WORKING/corpus/corpus-v2.tsv",
+  "source_sha256": "8095a6c08f577f6d8166048bbc727f3e7ba547e808fe697ef4248730744c5ed3",
+  "status": "observed",
+  "subject_id": "artifact.adapter-parity.v1_0_0"
+}

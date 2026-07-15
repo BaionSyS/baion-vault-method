@@ -1,0 +1,14 @@
+{
+  "applicability_id": "adapter-parity.candidate-object-v1",
+  "captured_utc": "2026-07-15T13:06:30Z",
+  "kind": "executed-object",
+  "object": "WORKING/objects/candidate_normalizer.py",
+  "object_sha256": "594f03aabe016daa9016b61963051f87c0a79e4541377eedfc76fa0935736aad",
+  "receipt_id": "receipt.executed-candidate.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "The candidate normalizer was imported and executed by the v2 probe.",
+  "source": "RECEIPTS/data/probe-v2.txt",
+  "source_sha256": "df900c31bf33a177eadb35a79f2a26095137b9e7ef91365cfa59ee9573656414",
+  "status": "pass",
+  "subject_id": "artifact.adapter-parity.v1_0_0"
+}

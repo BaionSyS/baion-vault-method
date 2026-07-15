@@ -1,0 +1,35 @@
+name: Checker bug
+description: Report a false pass, false failure, crash, or documentation mismatch
+title: "[checker] "
+labels: ["checker"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include private vault content, credentials, or unpublished material.
+  - type: input
+    id: version
+    attributes:
+      label: Checker version
+      placeholder: bvm-lint 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected invariant
+      description: What state should have passed or failed?
+    validations:
+      required: true
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Minimal public reproducer
+      description: Provide a fresh fixture or redacted minimal example.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true

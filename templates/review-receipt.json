@@ -1,0 +1,12 @@
+{
+  "schema": "bvm-review/0.1",
+  "review_id": "review.replace-me",
+  "artifact_id": "artifact.replace-me.v1_0_0",
+  "artifact": "CANON/replace-me-v1.0.0.md",
+  "artifact_sha256": "replace-with-lowercase-sha256",
+  "reviewer_class": "separate-instance",
+  "verdict": "conditional",
+  "reviewed_utc": "2026-07-15T12:00:00Z",
+  "scope": "State the review boundary.",
+  "notes": "State what passed, failed, and remains unverified."
+}

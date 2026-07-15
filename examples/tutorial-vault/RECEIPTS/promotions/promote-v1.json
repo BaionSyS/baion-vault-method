@@ -1,0 +1,38 @@
+{
+  "artifact": "CANON/bounded-adapter-parity-v1.0.0.md",
+  "artifact_id": "artifact.adapter-parity.v1_0_0",
+  "artifact_sha256": "98bd5b4776befc8d09e34f7f9af377a237e65081b6f344ad4f3e5b92979f4304",
+  "candidate": "RECEIPTS/candidates/bounded-adapter-parity-v1.0.0.md",
+  "candidate_sha256": "98bd5b4776befc8d09e34f7f9af377a237e65081b6f344ad4f3e5b92979f4304",
+  "decision_by": "tutorial-operator",
+  "evidence": [
+    "RECEIPTS/evidence/input-corpus-v2.json",
+    "RECEIPTS/evidence/probe-v2.json",
+    "RECEIPTS/evidence/executed-reference-object.json",
+    "RECEIPTS/evidence/executed-candidate-object.json",
+    "RECEIPTS/evidence/unit-valid-order.json",
+    "RECEIPTS/evidence/unit-nested.json",
+    "RECEIPTS/evidence/unit-duplicate-key.json",
+    "RECEIPTS/evidence/unit-nested-duplicate.json"
+  ],
+  "evidence_sha256": {
+    "RECEIPTS/evidence/executed-candidate-object.json": "72aaf00ce8b393a3713b38bd4eef523013b47ca385f5582f3f497dab5e6395ca",
+    "RECEIPTS/evidence/executed-reference-object.json": "b718fcb393d38ac28de9093777996e16a7dc29cf7ed4f0d96a3bde50597417f8",
+    "RECEIPTS/evidence/input-corpus-v2.json": "fe37dc3488a228ddf4387fa3ffd88a6f7644baca3f87f1d247640af48ae88845",
+    "RECEIPTS/evidence/probe-v2.json": "95e38437a6319aab4ccf3995ded886382585c4c0d107a841deef7d54fc487d94",
+    "RECEIPTS/evidence/unit-duplicate-key.json": "fe6f3ca554445f2d7967150444a4ab7bd975b5e4156cabd0962bce37c4d9c347",
+    "RECEIPTS/evidence/unit-nested-duplicate.json": "75781898508a677d73a2f001e088cab2103b82f273860a8d17e4976bf00ebf6b",
+    "RECEIPTS/evidence/unit-nested.json": "208339923b3454bf6598a9ba50044a8c51633b398a181f8f8a826de0724eeee3",
+    "RECEIPTS/evidence/unit-valid-order.json": "f2bb2703531ead7dfacd629ba982edb3d042635625aeb8bdda234c0c9c9606c7"
+  },
+  "promoted_from": "working",
+  "promoted_utc": "2026-07-15T13:20:00Z",
+  "promotion_id": "promotion.adapter-parity.v1",
+  "reviews": [
+    "RECEIPTS/reviews/independent-review-v1.json"
+  ],
+  "reviews_sha256": {
+    "RECEIPTS/reviews/independent-review-v1.json": "67ffe8e0b032f42c42dade2e47fb04636842f597e864d9f12c9e5d2b7b4f021c"
+  },
+  "schema": "bvm-promotion/0.1"
+}

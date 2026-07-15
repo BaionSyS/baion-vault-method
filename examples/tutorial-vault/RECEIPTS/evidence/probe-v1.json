@@ -1,0 +1,12 @@
+{
+  "applicability_id": "adapter-parity.corpus-v1",
+  "captured_utc": "2026-07-15T12:05:00Z",
+  "kind": "probe",
+  "receipt_id": "receipt.probe.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Two valid JSON cases only; malformed-input behavior not exercised.",
+  "source": "RECEIPTS/data/probe-v1.txt",
+  "source_sha256": "222b8cda09cea9d2b893bee035d088a76085f6d20a615db403fc32c5aaa32669",
+  "status": "pass",
+  "subject_id": "artifact.adapter-parity.v0_1_0"
+}

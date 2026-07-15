@@ -1,0 +1,90 @@
+{
+  "$id": "https://github.com/BaionSyS/baion-vault-method/schemas/bvm-evidence-receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "applicability_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "authority": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "boundary": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "captured_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "kind": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "object": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "object_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "procedure": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipt_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "bvm-receipt/0.1"
+    },
+    "scope": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "observed",
+        "inconclusive"
+      ]
+    },
+    "subject_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "supersedes_receipt": {
+      "type": "string"
+    },
+    "unit_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "receipt_id",
+    "subject_id",
+    "kind",
+    "captured_utc",
+    "status",
+    "scope",
+    "source",
+    "source_sha256"
+  ],
+  "title": "BVM evidence receipt 0.1",
+  "type": "object"
+}

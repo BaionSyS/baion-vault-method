@@ -1,0 +1,4 @@
+valid-order	accept	{"b":2,"a":1}
+nested	accept	{"z":{"b":2,"a":1},"a":[3,2,1]}
+duplicate-key	reject	{"a":1,"a":2}
+nested-duplicate	reject	{"outer":{"x":1,"x":2}}

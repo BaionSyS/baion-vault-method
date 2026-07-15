@@ -1,0 +1,24 @@
+{
+  "schema": "bvm-promotion/0.1",
+  "promotion_id": "promotion.replace-me",
+  "artifact_id": "artifact.replace-me.v1_0_0",
+  "artifact": "CANON/replace-me-v1.0.0.md",
+  "artifact_sha256": "replace-with-lowercase-sha256",
+  "candidate": "RECEIPTS/candidates/replace-me-v1.0.0.md",
+  "candidate_sha256": "replace-with-lowercase-sha256",
+  "promoted_from": "working",
+  "promoted_utc": "2026-07-15T12:00:00Z",
+  "decision_by": "operator",
+  "evidence": [
+    "RECEIPTS/evidence/replace-me.json"
+  ],
+  "reviews": [
+    "RECEIPTS/reviews/replace-me.json"
+  ],
+  "evidence_sha256": {
+    "RECEIPTS/evidence/replace-me.json": "replace-with-lowercase-sha256"
+  },
+  "reviews_sha256": {
+    "RECEIPTS/reviews/replace-me.json": "replace-with-lowercase-sha256"
+  }
+}

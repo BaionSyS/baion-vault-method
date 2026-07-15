@@ -1,0 +1,11 @@
+{
+  "schema": "bvm-retraction/0.1",
+  "retraction_id": "retraction.replace-me",
+  "artifact": "ARCHIVE/replace-me-v0.1.0.md",
+  "artifact_sha256": "replace-with-lowercase-sha256",
+  "retracted_utc": "2026-07-15T12:00:00Z",
+  "reason": "Describe the failed assumption, test, or source boundary.",
+  "replacement": "CANON/replace-me-v1.0.0.md",
+  "replacement_sha256": "replace-with-lowercase-sha256",
+  "preserve_original": true
+}

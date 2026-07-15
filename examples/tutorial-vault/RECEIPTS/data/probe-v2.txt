@@ -1,0 +1,5 @@
+case=valid-order expected=accept reference=accept candidate=accept parity=pass expectation=pass result={"a":1,"b":2}
+case=nested expected=accept reference=accept candidate=accept parity=pass expectation=pass result={"a":[3,2,1],"z":{"a":1,"b":2}}
+case=duplicate-key expected=reject reference=reject candidate=reject parity=pass expectation=pass
+case=nested-duplicate expected=reject reference=reject candidate=reject parity=pass expectation=pass
+SUMMARY cases=4 pass=4 fail=0

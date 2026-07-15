@@ -1,0 +1,63 @@
+{
+  "$id": "https://github.com/BaionSyS/baion-vault-method/schemas/bvm-review-receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "artifact": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "notes": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "review_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewed_utc": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+      "type": "string"
+    },
+    "reviewer_class": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "bvm-review/0.1"
+    },
+    "scope": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "verdict": {
+      "enum": [
+        "pass",
+        "fail",
+        "conditional"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "review_id",
+    "artifact_id",
+    "artifact",
+    "artifact_sha256",
+    "reviewer_class",
+    "verdict",
+    "reviewed_utc",
+    "scope",
+    "notes"
+  ],
+  "title": "BVM review receipt 0.1",
+  "type": "object"
+}
