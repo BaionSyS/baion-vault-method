@@ -10,9 +10,27 @@
 
 **Status:** v0.1.0, released 2026-07-15. The public tag [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) is the release record.
 
+**Break it. Fix it. Try to beat it:** run [`lab/start.sh`](lab/README.md) — the Vault Lab, a five-case guided falsification run against the real checker.
+
 BAION Vault Method (BVM) is a reference methodology for maintaining trustworthy project state when humans and AI agents work in the same file-based environment. It separates proposed work from accepted claims, requires addressable evidence before promotion, preserves corrections without erasing history, and ships an executable checker so structural conformance is a command rather than a feeling.
 
 BVM is **not** a consciousness claim, an AI-safety certification, a substitute for domain expertise, or a universal knowledge-management standard. Version 0.1.0 is a bounded reference method with a bounded checker.
+
+## Try to break it — the Vault Lab
+
+The fastest way to understand the method is to watch it fail. The
+[Vault Lab](lab/README.md) walks you through five small vaults that each
+violate one MUST — you predict the diagnostic, watch the real checker
+catch it, study the exact repair diff, and watch it pass. Four judgment
+scenarios then cover what the checker *cannot* decide, and the
+[challenge](lab/challenge/README.md) invites you to construct a vault that
+violates a SPEC.md MUST while `bvm-lint --strict` stays green — verified
+catches are credited in the Hall of Catches.
+
+```bash
+lab/start.sh          # guided run, 15-25 minutes
+lab/start.sh --check  # non-interactive fixture verification
+```
 
 ## The problem
 
@@ -76,22 +94,6 @@ PASS: structural conformance established for examples/tutorial-vault
 A zero exit code means the checker found no structural violations. It does **not** prove that the underlying claim is true, safe, complete, or persuasive.
 
 See [`QUICKSTART.md`](QUICKSTART.md) for the promotion sequence. A crucial detail is that the final candidate is frozen under `RECEIPTS/candidates/`; the review and promotion records must match the exact promoted bytes.
-
-## Try to break it — the Vault Lab
-
-The fastest way to understand the method is to watch it fail. The
-[Vault Lab](lab/README.md) walks you through five small vaults that each
-violate one MUST — you predict the diagnostic, watch the real checker
-catch it, study the exact repair diff, and watch it pass. Four judgment
-scenarios then cover what the checker *cannot* decide, and the
-[challenge](lab/challenge/README.md) invites you to construct a vault that
-violates a SPEC.md MUST while `bvm-lint --strict` stays green — verified
-catches are credited in the Hall of Catches.
-
-```bash
-lab/start.sh          # guided run, 15-25 minutes
-lab/start.sh --check  # non-interactive fixture verification
-```
 
 ## Reference structure
 
