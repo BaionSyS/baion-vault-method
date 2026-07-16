@@ -1,7 +1,7 @@
 # Vault Lab field report
 
 Five minutes, honestly filled in, is worth more to this project than a
-star. Copy this template into a **Field Reports** discussion on the
+star. Copy this template into a **Field Report** discussion on the
 repository (or an issue if Discussions are unavailable) and answer what
 you can — blank sections are fine.
 
@@ -43,7 +43,7 @@ For each case: what did you predict, and what actually happened?
 
 ## Where to send it
 
-- Preferred: a **Field Reports** discussion on the repository.
+- Preferred: a **Field Report** discussion on the repository.
 - Challenge attempts (you think you broke the method) go through the
   [attack report issue form](../.github/ISSUE_TEMPLATE/attack.yml) instead —
   see [challenge/README.md](challenge/README.md) for the rules.
