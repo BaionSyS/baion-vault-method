@@ -280,6 +280,54 @@ class ConformanceTests(unittest.TestCase):
         self.assertNotEqual(0, completed.returncode)
         self.assertIn("templates/vault.toml", completed.stdout)
 
+    def test_version_parity_check_rejects_method_series_escape(self) -> None:
+        # A method version outside the 0.1.x series must fail parity even if
+        # every method file agrees on it -- bvm-lint's BVM002 gate would
+        # reject the repository's own templates (the defect that made a
+        # single-string 0.2.0 bump impossible).
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name) / "release"
+        files = (
+            "pyproject.toml",
+            "README.md",
+            "SPEC.md",
+            "CHANGELOG.md",
+            "CITATION.cff",
+            "src/bvm_lint/__init__.py",
+            "examples/tutorial-vault/vault.toml",
+            "templates/vault.toml",
+        )
+        for relative_path in files:
+            source = ROOT / relative_path
+            target = root / relative_path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, target)
+        spec = root / "SPEC.md"
+        spec.write_text(
+            spec.read_text(encoding="utf-8").replace(
+                "**Version:** 0.1.0",
+                "**Version:** 0.2.0",
+            ),
+            encoding="utf-8",
+        )
+        for vault_toml in ("templates/vault.toml", "examples/tutorial-vault/vault.toml"):
+            path = root / vault_toml
+            path.write_text(
+                path.read_text(encoding="utf-8").replace(
+                    'method_version = "0.1.0"',
+                    'method_version = "0.2.0"',
+                ),
+                encoding="utf-8",
+            )
+        completed = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/check_version_parity.py"), str(root)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("outside the 0.1.x", completed.stdout)
+
     def test_requires_canonical_object_mode_is_explicit(self) -> None:
         tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
         path = root / "CANON/bounded-adapter-parity-v1.0.0.md"

@@ -6,7 +6,7 @@ authors:
   - family-names: "Mullins"
     given-names: "Steven A."
     name-suffix: "Jr."
-version: 0.1.0
+version: 0.2.0
 url: "https://github.com/BaionSyS/baion-vault-method"
 repository-code: "https://github.com/BaionSyS/baion-vault-method"
 abstract: >-

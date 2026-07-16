@@ -5,16 +5,18 @@
 > **Agents may propose state. Receipts establish it.**
 
 [![Verify](https://github.com/BaionSyS/baion-vault-method/actions/workflows/verify.yml/badge.svg)](https://github.com/BaionSyS/baion-vault-method/actions/workflows/verify.yml)
-[![Version](https://img.shields.io/badge/version-0.1.0-5c677d)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.2.0-5c677d)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**Status:** v0.1.0, released 2026-07-15. The public tag [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) is the release record.
+**Status:** v0.2.0, released 2026-07-16. The public tag [`v0.2.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.2.0) is the release record; [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) remains the record of the first cut.
+
+Two versions, on purpose: the **release version** (0.2.0) names what ships from this repository — checker, lab, docs. The **method version** (0.1.0, unchanged since the first release) names the specification contract in [`SPEC.md`](SPEC.md) that vaults declare conformance to via `method_version`. This release adds the Vault Lab; the method itself did not change.
 
 **Break it. Fix it. Try to beat it:** run [`lab/start.sh`](lab/README.md) — the Vault Lab, a five-case guided falsification run against the real checker.
 
 BAION Vault Method (BVM) is a reference methodology for maintaining trustworthy project state when humans and AI agents work in the same file-based environment. It separates proposed work from accepted claims, requires addressable evidence before promotion, preserves corrections without erasing history, and ships an executable checker so structural conformance is a command rather than a feeling.
 
-BVM is **not** a consciousness claim, an AI-safety certification, a substitute for domain expertise, or a universal knowledge-management standard. Version 0.1.0 is a bounded reference method with a bounded checker.
+BVM is **not** a consciousness claim, an AI-safety certification, a substitute for domain expertise, or a universal knowledge-management standard. Method v0.1.0 is a bounded reference method with a bounded checker.
 
 ## Try to break it — the Vault Lab
 
@@ -125,7 +127,7 @@ CAPTURE → WORKING → EVIDENCE + SEPARATE ENFORCEMENT → FROZEN CANDIDATE →
                                                             ARCHIVE
 ```
 
-## What ships in v0.1.0
+## What ships
 
 - A normative [core specification](SPEC.md).
 - A zero-dependency Python checker with stable diagnostic codes.
