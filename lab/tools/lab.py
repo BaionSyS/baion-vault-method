@@ -60,6 +60,22 @@ FICTION_FORBIDDEN = re.compile(
 
 RULE = "-" * 72
 
+# Spec-required exact wording (refined build spec v0.3.0 §6-R A and D):
+# the boundary opens every guided run; the bounded claim ends a run exactly
+# once, and only when every expectation held.
+BOUNDARY_STATEMENT = (
+    "This lab contains fictional records. No AI model is running. The\n"
+    "checker tests structural conformance; it does not determine whether\n"
+    "a claim is true.")
+FINAL_BOUNDED_CLAIM = (
+    "PASS means the checker found no declared structural violation in "
+    "these fixtures. It does not prove the seed inventory claim is true, "
+    "complete, safe, or decision-grade.")
+
+
+class LabQuit(Exception):
+    """Visitor ended input (EOF) before the run completed."""
+
 
 def load_strict_json(path: Path) -> dict:
     def no_dupes(pairs):
@@ -102,6 +118,46 @@ def vault_diff(broken: Path, fixed: Path) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# shared result assertions — the ONE path both --check and guided mode use
+# to decide whether the lab's expectations held (spec v0.3.0 §6-R C)
+# ---------------------------------------------------------------------------
+
+def broken_drift(case_id: str, expected: dict, codes: list[str],
+                 lines: list[str]) -> list[str]:
+    """Compare a broken-vault checker result against EXPECTED.json."""
+    problems: list[str] = []
+    declared = sorted(expected["broken_codes"])
+    if codes != declared:
+        problems.append(
+            f"{case_id}: broken-vault produced {codes}, EXPECTED declares {declared} "
+            "(exact match required; unexpected diagnostics are a failure)")
+    if not any(expected["primary_path"] in line and expected["primary_code"] in line
+               for line in lines):
+        problems.append(
+            f"{case_id}: primary diagnostic {expected['primary_code']} not reported "
+            f"on {expected['primary_path']}")
+    return problems
+
+
+def fixed_drift(case_id: str, expected: dict, codes: list[str],
+                report) -> list[str]:
+    """Compare a fixed-vault checker result against EXPECTED.json."""
+    if codes != sorted(expected["fixed_codes"]) or report.issues:
+        return [f"{case_id}: fixed-vault is not clean under --strict: {codes}"]
+    return []
+
+
+def assert_case_results(case_id: str) -> list[str]:
+    """Run the checker on one case pair and return every expectation drift."""
+    case_dir = CASES_DIR / case_id
+    expected = load_strict_json(case_dir / "EXPECTED.json")
+    broken_codes, broken_lines, _ = run_checker(case_dir / "broken-vault")
+    fixed_codes, _, fixed_report = run_checker(case_dir / "fixed-vault")
+    return (broken_drift(case_id, expected, broken_codes, broken_lines)
+            + fixed_drift(case_id, expected, fixed_codes, fixed_report))
+
+
+# ---------------------------------------------------------------------------
 # --check mode
 # ---------------------------------------------------------------------------
 
@@ -125,19 +181,10 @@ def check_case(case_id: str, problems: list[str]) -> None:
         problems.append(f"{case_id}: primary_code not in broken_codes")
 
     broken_codes, broken_lines, _ = run_checker(case_dir / "broken-vault")
-    if broken_codes != declared:
-        problems.append(
-            f"{case_id}: broken-vault produced {broken_codes}, EXPECTED declares {declared} "
-            "(exact match required; unexpected diagnostics are a failure)")
-    if not any(expected["primary_path"] in line and expected["primary_code"] in line
-               for line in broken_lines):
-        problems.append(
-            f"{case_id}: primary diagnostic {expected['primary_code']} not reported "
-            f"on {expected['primary_path']}")
+    problems.extend(broken_drift(case_id, expected, broken_codes, broken_lines))
 
     fixed_codes, _, fixed_report = run_checker(case_dir / "fixed-vault")
-    if fixed_codes != sorted(expected["fixed_codes"]) or fixed_report.issues:
-        problems.append(f"{case_id}: fixed-vault is not clean under --strict: {fixed_codes}")
+    problems.extend(fixed_drift(case_id, expected, fixed_codes, fixed_report))
 
     for path in sorted(case_dir.rglob("*")):
         if not path.is_file() or path.suffix not in {".md", ".json", ".toml", ".txt"}:
@@ -210,7 +257,7 @@ def ask(prompt: str) -> str:
         return input(prompt).strip()
     except EOFError:
         print()
-        raise SystemExit(0)
+        raise LabQuit()
 
 
 def pause() -> None:
@@ -224,7 +271,7 @@ def show_codes_help() -> None:
     print("  BVM037 review not bound to bytes")
 
 
-def guided_case(case_id: str) -> None:
+def guided_case(case_id: str, problems: list[str]) -> None:
     case_dir = CASES_DIR / case_id
     expected = load_strict_json(case_dir / "EXPECTED.json")
     broken = case_dir / "broken-vault"
@@ -248,7 +295,16 @@ def guided_case(case_id: str) -> None:
     codes, lines, _ = run_checker(broken)
     for line in lines:
         print(f"  {line}")
-    print(f"\n  exit status: 1 (FAIL) — codes: {', '.join(codes)}")
+    # The narrated verdict is computed from the actual result vs EXPECTED —
+    # never asserted (spec v0.3.0 §6-R B3): drift is reported, not papered over.
+    drift = broken_drift(case_id, expected, codes, lines)
+    if drift:
+        problems.extend(drift)
+        print("\n  EXPECTATION DRIFT — this is NOT the declared failure:")
+        for problem in drift:
+            print(f"    {problem}")
+    else:
+        print(f"\n  exit status: 1 (FAIL) — codes: {', '.join(codes)}")
     if predicted:
         hit = predicted & set(codes)
         verdict = "exactly right" if predicted == set(codes) else (
@@ -266,10 +322,13 @@ def guided_case(case_id: str) -> None:
     print("\n[6/6] PROVE IT — running the checker on fixed-vault\n")
     print(f"  $ python -m bvm_lint lab/cases/{case_id}/fixed-vault --strict\n")
     fixed_codes, _, report = run_checker(fixed)
-    if not report.issues:
+    drift = fixed_drift(case_id, expected, fixed_codes, report)
+    if not drift:
         print("  PASS: structural conformance established — zero findings.")
-    else:  # should be unreachable when fixtures are healthy
-        print(f"  UNEXPECTED: {fixed_codes}")
+    else:
+        problems.extend(drift)
+        print(f"  EXPECTATION DRIFT — fixed vault is NOT clean: {fixed_codes}")
+        print("  This run will exit nonzero; a finding on a fixed vault is fatal.")
     print(f"\n  Remember what green does NOT prove: {expected['does_not_prove']}")
     pause()
 
@@ -300,8 +359,8 @@ def run_guided() -> int:
     print(RULE)
     print("VAULT LAB — break the BAION Vault Method, on purpose, five ways")
     print(RULE)
-    print("""
-Each case is a pair of small fictional vaults: one broken, one repaired.
+    print(f"\n{BOUNDARY_STATEMENT}\n")
+    print("""Each case is a pair of small fictional vaults: one broken, one repaired.
 You predict what the checker will say, watch it fail, read why, study the
 exact repair diff, and watch it pass. The checker is the repository's real
 bvm-lint — nothing here is mocked.
@@ -309,20 +368,42 @@ bvm-lint — nothing here is mocked.
 Then four judgment scenarios cover what the checker can NOT decide for
 you, and the challenge invites you to break the method yourself.
 """)
+    # Fail-closed pre-flight (spec v0.3.0 §6-R C): every case pair is asserted
+    # through the same path --check uses BEFORE any narration, so an early
+    # quit can never convert expectation drift into a zero exit.
+    problems: list[str] = []
     for case_id in CASE_ORDER:
-        guided_case(case_id)
+        problems.extend(assert_case_results(case_id))
 
-    print(f"\n{RULE}\nJUDGMENT SCENARIOS — the checker stops here; you do not\n{RULE}")
-    if ask("\nRun the four judgment scenarios? [Y/n] ").lower() not in {"n", "no"}:
-        for scenario_id in SCENARIO_ORDER:
-            guided_scenario(scenario_id)
+    try:
+        for case_id in CASE_ORDER:
+            guided_case(case_id, problems)
+
+        print(f"\n{RULE}\nJUDGMENT SCENARIOS — the checker stops here; you do not\n{RULE}")
+        if ask("\nRun the four judgment scenarios? [Y/n] ").lower() not in {"n", "no"}:
+            for scenario_id in SCENARIO_ORDER:
+                guided_scenario(scenario_id)
+    except LabQuit:
+        if problems:
+            print("vault-lab: quit with expectation drift already observed:")
+            for problem in sorted(set(problems)):
+                print(f"- {problem}")
+            return 1
+        return 0
 
     print(f"\n{RULE}\nWHERE TO GO NEXT\n{RULE}\n")
-    print("- The challenge: violate a specific MUST in SPEC.md while the")
+    print("- Challenge: violate a specific MUST in SPEC.md while the")
     print("  checker stays green. Rules: lab/challenge/README.md")
-    print("- Tell us what happened (five minutes, template provided):")
+    print("- Report: tell us what happened where BVM met a real project:")
     print("  lab/FIELD_REPORT.md")
-    print("- Verify this lab yourself anytime: lab/start.sh --check\n")
+    print("- Verify: re-check this lab yourself anytime: lab/start.sh --check\n")
+
+    if problems:
+        print("VAULT LAB RUN FAILED — expectation drift:")
+        for problem in sorted(set(problems)):
+            print(f"- {problem}")
+        return 1
+    print(FINAL_BOUNDED_CLAIM)
     return 0
 
 

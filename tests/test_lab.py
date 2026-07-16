@@ -78,5 +78,98 @@ class LabFixtureTests(unittest.TestCase):
             self.assertEqual(data, after[rel], f"regeneration changed {rel}")
 
 
+GUIDED_INPUT = "\n\n\n" * 5 + "n\n"  # per case: predict, WHY pause, prove pause; then skip scenarios
+FINAL_CLAIM = ("PASS means the checker found no declared structural violation in "
+               "these fixtures. It does not prove the seed inventory claim is "
+               "true, complete, safe, or decision-grade.")
+BOUNDARY = "This lab contains fictional records."
+
+STUB_LINT_TEMPLATE = '''\
+from dataclasses import dataclass
+
+
+@dataclass(order=True)
+class Issue:
+    severity: str = "error"
+    code: str = "BVM999"
+    path: str = "stub/record.md"
+    message: str = "stub finding"
+
+    def to_dict(self):
+        return {{"code": self.code}}
+
+
+class Report:
+    def __init__(self, issues):
+        self.issues = issues
+
+
+def lint_vault(vault):
+    return Report({issues})
+'''
+
+
+def run_lab(repo_root: Path, *args: str, stdin_text: str = "") -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["sh", str(repo_root / "lab" / "start.sh"), *args],
+        input=stdin_text, capture_output=True, text=True, check=False,
+        cwd=repo_root)
+
+
+class LabFailClosedTests(unittest.TestCase):
+    """Spec v0.3.0 §6-R C/D + merge gates 5/6/14: the guided run must exit
+    nonzero on any expectation drift and emit the exact bounded-claim
+    sentence once, only on a fully healthy run. The mutation tests reproduce
+    the two adversarial checker substitutions from the 2026-07-16 GPT
+    advisory (zero-findings stub; unexpected-BVM999 stub)."""
+
+    def test_healthy_guided_run_exits_zero_and_claims_once(self) -> None:
+        result = run_lab(REPO_ROOT, stdin_text=GUIDED_INPUT)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(result.stdout.count(FINAL_CLAIM), 1, result.stdout)
+        self.assertEqual(result.stdout.count(BOUNDARY), 1, result.stdout)
+
+    def test_guided_eof_quit_is_clean_and_makes_no_claim(self) -> None:
+        result = run_lab(REPO_ROOT, stdin_text="")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn(FINAL_CLAIM, result.stdout)
+
+    def _mutated_tree(self, tmp: str, issues_literal: str) -> Path:
+        """Copy the lab into tmp with a stub checker shadowing bvm_lint."""
+        import shutil
+        root = Path(tmp) / "mutated"
+        shutil.copytree(REPO_ROOT / "lab", root / "lab")
+        issue_form = root / ".github" / "ISSUE_TEMPLATE" / "attack.yml"
+        issue_form.parent.mkdir(parents=True)
+        shutil.copy(REPO_ROOT / ".github" / "ISSUE_TEMPLATE" / "attack.yml", issue_form)
+        stub = root / "src" / "bvm_lint"
+        stub.mkdir(parents=True)
+        (stub / "__init__.py").write_text("", encoding="utf-8")
+        (stub / "lint.py").write_text(
+            STUB_LINT_TEMPLATE.format(issues=issues_literal), encoding="utf-8")
+        return root
+
+    def _assert_fails_closed(self, root: Path) -> None:
+        guided = run_lab(root, stdin_text=GUIDED_INPUT)
+        self.assertNotEqual(guided.returncode, 0,
+                            "guided run exited 0 under a drifted checker:\n"
+                            + guided.stdout + guided.stderr)
+        self.assertNotIn(FINAL_CLAIM, guided.stdout)
+        check = run_lab(root, "--check")
+        self.assertNotEqual(check.returncode, 0,
+                            "--check exited 0 under a drifted checker:\n"
+                            + check.stdout + check.stderr)
+
+    def test_mutation_zero_findings_checker_fails_closed(self) -> None:
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            self._assert_fails_closed(self._mutated_tree(tmp, "[]"))
+
+    def test_mutation_unexpected_finding_fails_closed(self) -> None:
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            self._assert_fails_closed(self._mutated_tree(tmp, "[Issue()]"))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -33,6 +33,28 @@ body:
       render: shell
     validations:
       required: true
+  - type: textarea
+    id: scope-justification
+    attributes:
+      label: Why this is inside the checker's structural scope
+      description: The violation must be visible in the vault's bytes, not only in what the prose means. Argue the CLASS 1 vs CLASS 3 line up front.
+      placeholder: "The MUST requires X of the receipt bytes; my vault's receipt bytes show Y; the checker parses that surface and still passes."
+    validations:
+      required: true
+  - type: textarea
+    id: regression-assertion
+    attributes:
+      label: Smallest proposed regression assertion
+      description: The minimal test or check that, once added, would catch your vault. One sentence or a few lines — you are proposing the fixture your catch becomes.
+    validations:
+      required: true
+  - type: textarea
+    id: residual-boundary
+    attributes:
+      label: What the fix still would not prove
+      description: Every catch narrows a gap; none makes green mean true. State the claim boundary that remains after your proposed fix lands.
+    validations:
+      required: true
   - type: dropdown
     id: claimed-class
     attributes:

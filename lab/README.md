@@ -42,10 +42,13 @@ Each case directory holds `broken-vault/`, `fixed-vault/`, `WHY.md`, and a
 machine-readable `EXPECTED.json`. The two vaults differ only in the files
 the repair requires — diff them yourself.
 
-`--check` is fail-closed and anti-rigging: every broken vault must produce
-**exactly** the diagnostics its `EXPECTED.json` declares (an unexpected
-extra finding fails the check), and every fixed vault must pass `--strict`
-with zero findings.
+Both modes are fail-closed and anti-rigging: every broken vault must
+produce **exactly** the diagnostics its `EXPECTED.json` declares (an
+unexpected extra finding fails the run), and every fixed vault must pass
+`--strict` with zero findings. The guided run asserts all five case pairs
+through the same path `--check` uses before narrating anything, and exits
+nonzero on any expectation drift — the on-screen verdicts are computed
+from the live checker output, never scripted.
 
 ## After the cases
 

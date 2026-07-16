@@ -12,15 +12,25 @@ exactly the set of violations it cannot miss; every verified catch either
 grows that set or forces the spec to state its boundary honestly. Either
 outcome makes the method stronger, which is why catches are credited.
 
-## A valid submission has three parts
+## A valid submission has seven parts
 
 1. **The clause.** Quote the specific MUST from SPEC.md (section number and
    text) that your vault violates.
-2. **The vault.** A minimal reproduction — the smallest tree that shows the
+2. **The checker version.** The released checker version or commit/tag you
+   ran against (`python -m bvm_lint --version`).
+3. **The vault.** A minimal reproduction — the smallest tree that shows the
    violation. Fictional content only (invent your own Cedar Lane).
-3. **The green run.** The output of `python -m bvm_lint <vault> --strict`
-   showing exit status 0 against the current released checker version
-   (state the version; `python -m bvm_lint --version`).
+4. **The green run.** The exact command and full output of
+   `python -m bvm_lint <vault> --strict` showing exit status 0.
+5. **The scope case.** Why this result is *inside the checker's declared
+   structural scope* — the violation must be visible in the vault's bytes,
+   not only in what the prose means. (This is the line between CLASS 1 and
+   CLASS 3 below; argue it up front.)
+6. **The smallest regression assertion.** The minimal test or check that,
+   once added, would catch your vault — one sentence or a few lines is
+   enough. You are proposing the fixture your catch becomes.
+7. **The residual boundary.** What the proposed fix still would *not*
+   prove. Every catch narrows a gap; none of them makes green mean true.
 
 Submit through the [attack report issue form](../../.github/ISSUE_TEMPLATE/attack.yml).
 
