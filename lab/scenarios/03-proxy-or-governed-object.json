@@ -1,0 +1,26 @@
+{
+  "answer_key": "c",
+  "choices": [
+    {
+      "key": "a",
+      "label": "Run the quick reimplementation and record its pass as evidence for the canon claim - same logic, same answer."
+    },
+    {
+      "key": "b",
+      "label": "Skip the check entirely rather than run a substitute."
+    },
+    {
+      "key": "c",
+      "label": "Either run the governed script, or run the substitute and record its result as proxy evidence that cannot support the canon claim."
+    }
+  ],
+  "explanations": {
+    "a": "The claim names a specific governed object. A reimplementation - however similar it looks - is a different object with its own bugs and its own behavior. Booking its output as if the governed object ran is the substitution the executed-object binding (hash-bound object, recorded execution) exists to prevent.",
+    "b": "Refusing to gather any signal is unnecessarily lossy. Proxy runs are allowed and often useful - the method only insists they be labeled as what they are.",
+    "c": "Correct. If the claim requires the governed object, the governed object must actually run, hash-verified at runtime. If circumstances force a stand-in, the result is recorded with proxy standing (object_mode 'proxy') and everyone downstream can see the claim is not yet supported. Hash-checking a file on disk is not the same as executing it."
+  },
+  "question": "The tally script is the governed object behind the claim. What now?",
+  "schema": "vault-lab-scenario/0.1",
+  "situation": "The canon claim says the packet tally was produced by the garden's governed tally script, hash-bound in an executed-object receipt. Today that script will not run on the coordinator's laptop, and a helper offers a quick reimplementation that 'does the same thing'.",
+  "title": "The real object will not run"
+}

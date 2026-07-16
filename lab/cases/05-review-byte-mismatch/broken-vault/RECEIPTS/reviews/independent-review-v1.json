@@ -1,0 +1,12 @@
+{
+  "artifact": "CANON/shelf-count-v1.0.0.md",
+  "artifact_id": "artifact.shelf-count.v1_0_0",
+  "artifact_sha256": "e72a21f054f6adb57aa40a13cd493d5f6d030ca7b182290ceb9f91a91f77c013",
+  "notes": "Pass for the bounded shelf-count claim. Checked the count sheet totals, the ledger reconciliation story, and the stated unknowns.",
+  "review_id": "review.shelf-count.v1",
+  "reviewed_utc": "2026-07-12T09:15:00Z",
+  "reviewer_class": "separate-instance",
+  "schema": "bvm-review/0.1",
+  "scope": "Exact artifact bytes against the hash-bound count sheet and receipts.",
+  "verdict": "pass"
+}

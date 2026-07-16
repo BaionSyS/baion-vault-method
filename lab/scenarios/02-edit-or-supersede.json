@@ -1,0 +1,26 @@
+{
+  "answer_key": "b",
+  "choices": [
+    {
+      "key": "a",
+      "label": "Edit the canon file in place - it is one wrong digit, and the review clearly meant the right number."
+    },
+    {
+      "key": "b",
+      "label": "Write a superseding v1.1.0 artifact with its own evidence, review, freeze, and promotion; archive v1.0.0."
+    },
+    {
+      "key": "c",
+      "label": "Leave canon wrong but add a note in the README explaining the real number."
+    }
+  ],
+  "explanations": {
+    "a": "This is exactly the silent edit from case 05. The moment canon bytes change, the review, the frozen candidate, and the promotion all bind bytes that no longer exist. \"The review clearly meant\" is a human guess layered over a broken chain - the method exists so nobody has to make that guess.",
+    "b": "Correct. The claim's meaning changed (a different packet count), so the unit of change is a new artifact version: new evidence receipt for the corrected count, a fresh review of the new bytes, a fresh freeze and promotion, and the old artifact preserved in ARCHIVE via supersession. History stays intact and the current claim is fully vouched for.",
+    "c": "Now the vault's strongest record actively misleads, and the correction lives in prose the checker never reads. Anyone consuming CANON programmatically - including a future AI session - gets the wrong number with a green checkmark."
+  },
+  "question": "What is the method-correct move?",
+  "schema": "vault-lab-scenario/0.1",
+  "situation": "A week after promotion, the coordinator realizes the canon shelf count says 48 but the count sheet actually totals 47 - a transcription slip in the artifact body, already reviewed and promoted.",
+  "title": "The claim is wrong. Now what?"
+}

@@ -1,0 +1,12 @@
+{
+  "broken_codes": ["BVM016", "BVM033"],
+  "case_id": "02-missing-reference",
+  "does_not_prove": "A resolving reference proves the cited receipt exists with the recorded bytes. It does not prove the germination check was performed well.",
+  "fixed_codes": [],
+  "prediction_prompt": "The canon artifact cites a germination-check receipt, but no such file exists in the vault. Which record(s) should the checker flag?",
+  "primary_code": "BVM016",
+  "primary_path": "CANON/shelf-count-v1.0.0.md",
+  "schema": "vault-lab-case/0.1",
+  "spec_must": "SPEC.md sections 8 and 12: every evidence reference on a managed artifact MUST resolve to a recognized receipt inside the vault.",
+  "title": "Citation to a receipt that does not exist"
+}

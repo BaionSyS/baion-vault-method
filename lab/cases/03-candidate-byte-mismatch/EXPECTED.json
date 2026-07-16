@@ -1,0 +1,12 @@
+{
+  "broken_codes": ["BVM033"],
+  "case_id": "03-candidate-byte-mismatch",
+  "does_not_prove": "A byte-identical frozen candidate proves what was reviewed is what was promoted. It does not prove the promoted claim is true.",
+  "fixed_codes": [],
+  "prediction_prompt": "Someone edited the frozen candidate snapshot after promotion, so it no longer matches the promoted canon bytes. What should the checker say?",
+  "primary_code": "BVM033",
+  "primary_path": "CANON/shelf-count-v1.0.0.md",
+  "schema": "vault-lab-case/0.1",
+  "spec_must": "SPEC.md sections 11 and 12: the frozen candidate under RECEIPTS/candidates/ MUST be byte-identical to the promoted canon artifact.",
+  "title": "Frozen candidate no longer matches canon"
+}

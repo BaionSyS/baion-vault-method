@@ -1,0 +1,12 @@
+{
+  "broken_codes": ["BVM031", "BVM033", "BVM037"],
+  "case_id": "05-review-byte-mismatch",
+  "does_not_prove": "A re-review bound to the new bytes proves the current text was seen by a second party. It does not prove the edit itself was a good idea.",
+  "fixed_codes": [],
+  "prediction_prompt": "After promotion, someone silently fixed a typo in the canon file. The review receipt still records the old hash. Which diagnostics should fire?",
+  "primary_code": "BVM037",
+  "primary_path": "CANON/shelf-count-v1.0.0.md",
+  "schema": "vault-lab-case/0.1",
+  "spec_must": "SPEC.md section 10: a review MUST be bound to the exact bytes it reviewed; editing reviewed bytes voids the review, the freeze, and the promotion binding.",
+  "title": "Silent edit after review"
+}

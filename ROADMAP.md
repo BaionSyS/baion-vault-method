@@ -11,6 +11,7 @@ The roadmap records candidates, not commitments.
 - Add fixtures for multi-repository, data-pipeline, and long-running agent workflows.
 - Add a machine-readable conformance manifest that records checker version and profile.
 - Test adoption outside the originating environment and publish both friction and failure reports.
+  The Vault Lab (`lab/`) is the first instrument for this: guided break/repair cases, judgment scenarios, a beat-the-checker challenge, and a field-report template.
 - Evaluate whether semantic trigger declarations can be reviewed mechanically without pretending the checker understands claims.
 
 ## Conditions before using “standard”

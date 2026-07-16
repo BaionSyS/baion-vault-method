@@ -1,0 +1,12 @@
+{
+  "broken_codes": ["BVM031"],
+  "case_id": "01-missing-review",
+  "does_not_prove": "A qualifying review proves someone other than the writer accepted these exact bytes. It does not prove the count is correct.",
+  "fixed_codes": [],
+  "prediction_prompt": "The only review on this canon artifact was written by the same person who wrote the artifact. What should the checker say?",
+  "primary_code": "BVM031",
+  "primary_path": "CANON/shelf-count-v1.0.0.md",
+  "schema": "vault-lab-case/0.1",
+  "spec_must": "SPEC.md section 12: a canon artifact MUST carry at least one passing non-self review bound to its exact bytes.",
+  "title": "Canon with only a self-review"
+}

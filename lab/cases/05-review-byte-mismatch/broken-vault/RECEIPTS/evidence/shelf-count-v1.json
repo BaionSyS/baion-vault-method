@@ -1,0 +1,12 @@
+{
+  "applicability_id": "shelf-count.2026-07",
+  "captured_utc": "2026-07-12T09:10:00Z",
+  "kind": "count-check",
+  "receipt_id": "receipt.shelf-count.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Recount of the seed cabinet after re-shelving, checked against the checkout ledger.",
+  "source": "RECEIPTS/data/shelf-count-v1.txt",
+  "source_sha256": "d0ed510ea56539e06880b92beb861dc3e02b889081323f33b42a5ec607bad871",
+  "status": "pass",
+  "subject_id": "artifact.shelf-count.v1_0_0"
+}

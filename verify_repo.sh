@@ -16,6 +16,7 @@ python scripts/check_public_boundary.py .
 python scripts/check_version_parity.py .
 python scripts/check_diagnostic_parity.py .
 python scripts/check_release_surface.py .
+sh lab/start.sh --check
 python -m bvm_lint --version
 
 echo "REPOSITORY VERIFY PASS"

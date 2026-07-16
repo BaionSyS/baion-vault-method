@@ -1,0 +1,54 @@
+name: Attack report (challenge submission)
+description: You built a vault that violates a SPEC.md MUST while bvm-lint --strict stays green. Show your work.
+title: "[attack]: "
+labels: ["challenge"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Rules and acceptance classes: `lab/challenge/README.md`. One violation
+        per submission, minimal reproduction, fictional values only. Verified
+        catches are credited in the Hall of Catches.
+  - type: textarea
+    id: clause
+    attributes:
+      label: The MUST you violated
+      description: Quote the exact clause from SPEC.md, with its section number.
+      placeholder: "SPEC.md section 10: a review MUST be bound to the exact bytes it reviewed..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction vault
+      description: Paste the vault as a file tree with file contents, or attach a zip. Smallest tree that demonstrates the violation wins.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: green-run
+    attributes:
+      label: The green run
+      description: Full output of `python -m bvm_lint <vault> --strict` (exit status 0) plus `python -m bvm_lint --version`.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: claimed-class
+    attributes:
+      label: Your claimed class
+      description: Where do you think this lands? (The ruling may differ — that discussion is part of the fun.)
+      options:
+        - CLASS 1 — checker gap (violation in vault bytes, checker green)
+        - CLASS 2 — spec ambiguity (MUST decidable two ways)
+        - CLASS 3 — outside the checker's surface (boundary catch)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: How you found it, what you expected the checker to do, anything else.
+    validations:
+      required: false

@@ -1,0 +1,24 @@
+{
+  "artifact": "CANON/shelf-count-v1.0.0.md",
+  "artifact_id": "artifact.shelf-count.v1_0_0",
+  "artifact_sha256": "e72a21f054f6adb57aa40a13cd493d5f6d030ca7b182290ceb9f91a91f77c013",
+  "candidate": "RECEIPTS/candidates/shelf-count-v1.0.0.md",
+  "candidate_sha256": "e72a21f054f6adb57aa40a13cd493d5f6d030ca7b182290ceb9f91a91f77c013",
+  "decision_by": "cedar-lane-coordinator",
+  "evidence": [
+    "RECEIPTS/evidence/shelf-count-v1.json"
+  ],
+  "evidence_sha256": {
+    "RECEIPTS/evidence/shelf-count-v1.json": "dad6db09baded589b88688abe7c9a43d03f975b7e6065c1070ed3ddfec996ab2"
+  },
+  "promoted_from": "working",
+  "promoted_utc": "2026-07-12T09:20:00Z",
+  "promotion_id": "promotion.shelf-count.v1",
+  "reviews": [
+    "RECEIPTS/reviews/independent-review-v1.json"
+  ],
+  "reviews_sha256": {
+    "RECEIPTS/reviews/independent-review-v1.json": "59e37648ebe34186fea171a4d31f5f1a594051a7a0f91f992649805185edf295"
+  },
+  "schema": "bvm-promotion/0.1"
+}

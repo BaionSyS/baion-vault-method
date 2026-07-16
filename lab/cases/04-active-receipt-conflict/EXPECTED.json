@@ -1,0 +1,12 @@
+{
+  "broken_codes": ["BVM024"],
+  "case_id": "04-active-receipt-conflict",
+  "does_not_prove": "Explicit supersession proves the vault states which measurement is operative. It does not prove the recount was performed correctly.",
+  "fixed_codes": [],
+  "prediction_prompt": "Two count-check receipts cover the same subject and scope: one fail, one pass. Neither mentions the other. What should the checker say?",
+  "primary_code": "BVM024",
+  "primary_path": "CANON/shelf-count-v1.0.0.md",
+  "schema": "vault-lab-case/0.1",
+  "spec_must": "SPEC.md section 9.3: active receipts of the same kind and applicability for a canon subject MUST NOT contradict without explicit supersession.",
+  "title": "Contradicting receipts with no supersession"
+}

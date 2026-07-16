@@ -1,0 +1,26 @@
+{
+  "answer_key": "c",
+  "choices": [
+    {
+      "key": "a",
+      "label": "Two confirmations beat one - record both receipts and call the claim doubly supported."
+    },
+    {
+      "key": "b",
+      "label": "Discard the volunteer's tally as redundant and keep only the coordinator's."
+    },
+    {
+      "key": "c",
+      "label": "Record one evidence receipt against the shared photo, and note in scope that both tallies derive from it."
+    }
+  ],
+  "explanations": {
+    "a": "Both tallies were computed from the same photo. Agreement between two readings of one source measures the source's legibility, not the world twice. Counting it as two receipts inflates support that does not exist.",
+    "b": "Deleting the volunteer's work loses real information - if the two tallies had disagreed, that disagreement would have mattered. The problem is not that two people counted; it is booking their shared origin as independence.",
+    "c": "Correct. Convergence only adds evidential weight when the paths to the claim are independent. The honest record is one receipt whose scope names the shared source, so a future reader knows a second, genuinely independent count (a fresh physical recount) would still add something."
+  },
+  "question": "How should this land in the vault?",
+  "schema": "vault-lab-scenario/0.1",
+  "situation": "The Cedar Lane coordinator counts 48 packets from a photo of the seed cabinet. A volunteer, working separately, also reports 48 - but you discover the volunteer counted from the same photo, not from the cabinet.",
+  "title": "Two confirmations, one source"
+}

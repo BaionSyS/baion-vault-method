@@ -1,0 +1,26 @@
+{
+  "answer_key": "b",
+  "choices": [
+    {
+      "key": "a",
+      "label": "Yes - the vault passes strict checking, so the claim is verified."
+    },
+    {
+      "key": "b",
+      "label": "No - a green run means the custody chain is intact; whether 48 is true still rests on the quality of the count and the review."
+    },
+    {
+      "key": "c",
+      "label": "No - and since the checker cannot prove truth, running it adds nothing."
+    }
+  ],
+  "explanations": {
+    "a": "This is the trap the whole lab is built around. bvm-lint verifies structure: references resolve, hashes match, reviews bind exact bytes, timestamps are ordered, promotions are complete. Every one of those can hold around a claim that is simply wrong - a careless count, a rubber-stamp review. Green is the floor, not the verdict.",
+    "b": "Correct. Structural conformance (SPEC.md section 22) proves nobody swapped, forged, or silently edited the records - so your remaining doubt is concentrated where it belongs, on the human and empirical quality of the work. That narrowing is the checker's entire value, and it is real value. It just is not truth.",
+    "c": "Too far in the other direction. Without the structural floor you cannot even trust that the count sheet you are reading is the one that was reviewed. The checker does not prove the claim; it makes the claim auditable."
+  },
+  "question": "The checker exits 0 with zero findings. Does that mean the cabinet really holds 48 packets?",
+  "schema": "vault-lab-scenario/0.1",
+  "situation": "A funder asks whether Cedar Lane's inventory claim can be trusted. You run bvm-lint --strict on the vault: PASS, no issues.",
+  "title": "The checker is green. Is the claim true?"
+}

@@ -1,0 +1,13 @@
+{
+  "lineages": {
+    "lineage.shelf-count": {
+      "current": "CANON/shelf-count-v1.0.0.md",
+      "promotion": "RECEIPTS/promotions/promote-v2.json",
+      "promotion_sha256": "c607fa97366aeefd6dc0e2755c79663ab23de384f8da23712439b77ab98745be",
+      "status": "current",
+      "version": "1.0.0"
+    }
+  },
+  "schema": "bvm-index/0.1",
+  "updated_utc": "2026-07-12T09:45:00Z"
+}

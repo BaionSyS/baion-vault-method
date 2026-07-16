@@ -1,0 +1,12 @@
+{
+  "applicability_id": "germination.tomato.2026-07",
+  "captured_utc": "2026-07-12T09:11:00Z",
+  "kind": "germination-check",
+  "receipt_id": "receipt.germination.v1",
+  "schema": "bvm-receipt/0.1",
+  "scope": "Ten-seed spot check of the oldest tomato packet against the 7-of-10 floor.",
+  "source": "RECEIPTS/data/germination-log-v1.txt",
+  "source_sha256": "5fcab8093554a4186cc61979c8b33c47e9a63c0cccf205dcdcdf19122c2dab0f",
+  "status": "pass",
+  "subject_id": "artifact.shelf-count.v1_0_0"
+}
