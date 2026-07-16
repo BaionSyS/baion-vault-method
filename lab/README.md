@@ -62,6 +62,31 @@ from the live checker output, never scripted.
 - **Field report** ([FIELD_REPORT.md](FIELD_REPORT.md)) — five minutes to
   tell us what you predicted, what surprised you, and what was confusing.
 
+## The contract this lab is built to
+
+The lab is governed by a sealed build specification:
+`BAION_VAULT_LAB_V1_REFINED_BUILD_SPEC` v0.3.0, 2026-07-16, SHA-256
+`2afb782d8607e8db0c795b0b57fe0a42ad8182c266a58124efba0362aee7c143`
+(a vault record; the vault is not public, the hash is the fixed point).
+The two required verbatim statements from that contract are what you see
+in every run:
+
+The opening boundary, before any case:
+
+> This lab contains fictional records. No AI model is running. The checker
+> tests structural conformance; it does not determine whether a claim is
+> true.
+
+The final bounded claim, emitted exactly once and only when every
+expectation held:
+
+> PASS means the checker found no declared structural violation in these
+> fixtures. It does not prove the seed inventory claim is true, complete,
+> safe, or decision-grade.
+
+A failed run must never emit that sentence. No badge, certification, or
+score exists here.
+
 ## Regenerating fixtures (maintainers)
 
 `lab/tools/build_fixtures.py` rebuilds every case deterministically; all

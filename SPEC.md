@@ -1,6 +1,6 @@
 # BAION Vault Method — Core Specification v0.1
 
-**Status:** v0.1.0 release candidate; public reference methodology
+**Status:** method v0.1.0, released; public reference methodology. Ships in repository release v0.2.0 (see CHANGELOG.md); the method contract is unchanged since v0.1.0.
 
 **Version:** 0.1.0
 
