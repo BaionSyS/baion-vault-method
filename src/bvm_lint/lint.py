@@ -17,6 +17,7 @@ from .util import (
     iter_markdown_files,
     load_json,
     markdown_body,
+    strip_fenced_code_and_comments,
     compare_semver,
     parse_utc,
     reference_dedup_key,
@@ -242,7 +243,10 @@ class VaultLinter:
     def _validate_handoff_sections(self, artifact: Artifact) -> None:
         headings = [
             re.sub(r"\s+", " ", match.group(1).strip().lower())
-            for match in re.finditer(r"(?m)^#{1,6}\s+(.+?)\s*$", markdown_body(artifact.path))
+            for match in re.finditer(
+                r"(?m)^#{1,6}\s+(.+?)\s*$",
+                strip_fenced_code_and_comments(markdown_body(artifact.path)),
+            )
         ]
         missing: list[str] = []
         for label, aliases in HANDOFF_HEADING_GROUPS.items():

@@ -210,6 +210,17 @@ class ConformanceTests(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         self.assertIn("BVM090", codes(lint_vault(root)))
 
+    def test_handoff_headings_inside_a_code_fence_do_not_satisfy_sections(self) -> None:
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        path = root / "HANDOFFS/tutorial-handoff-v0.1.0.md"
+        text = path.read_text(encoding="utf-8")
+        # A required heading demoted into a fenced code block is example text,
+        # not a real section: BVM090 must still fire (BVM-01 false closure).
+        self.assertIn("## Stop conditions", text)
+        text = text.replace("## Stop conditions", "```\n## Stop conditions\n```")
+        path.write_text(text, encoding="utf-8")
+        self.assertIn("BVM090", codes(lint_vault(root)))
+
     def test_path_escape_is_caught(self) -> None:
         tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
         path = root / "CANON/bounded-adapter-parity-v1.0.0.md"

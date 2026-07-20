@@ -77,6 +77,44 @@ def markdown_body(path: Path) -> str:
     return text[match.end():] if match else text
 
 
+_FENCE_OPEN_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})")
+
+
+def strip_fenced_code_and_comments(text: str) -> str:
+    """Blank fenced code blocks and HTML comments before a structural scan.
+
+    Required-section detection must see only real document headings. A ``#``
+    line inside a ``` / ~~~ fence or an HTML comment is example or quoted text,
+    not a section, and must never satisfy a required-section check — otherwise a
+    handoff can carry its mandatory headings only inside a fenced template and
+    still pass strict lint (BVM090 false closure). Lines are blanked rather than
+    removed so byte offsets and line counts elsewhere stay comparable.
+    """
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+    out: list[str] = []
+    fence_char: str | None = None
+    fence_len = 0
+    for line in text.splitlines():
+        match = _FENCE_OPEN_RE.match(line)
+        marker = match.group(1) if match else None
+        if fence_char is None:
+            if marker is not None:
+                fence_char, fence_len = marker[0], len(marker)
+                out.append("")  # the opening fence is not a heading
+            else:
+                out.append(line)
+        else:
+            out.append("")  # blank every line inside the fence, including the closer
+            if (
+                marker is not None
+                and marker[0] == fence_char
+                and len(marker) >= fence_len
+                and line.strip() == marker
+            ):
+                fence_char, fence_len = None, 0
+    return "\n".join(out)
+
+
 def iter_markdown_files(base: Path) -> list[Path]:
     """Discover managed Markdown case-insensitively.
 
