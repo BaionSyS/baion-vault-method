@@ -77,6 +77,32 @@ def markdown_body(path: Path) -> str:
     return text[match.end():] if match else text
 
 
+def iter_markdown_files(base: Path) -> list[Path]:
+    """Discover managed Markdown case-insensitively.
+
+    A file named ``NOTES.MD`` is still Markdown; matching only the lowercase
+    ``.md`` glob would let it escape linting, so compare the folded suffix.
+    """
+    return sorted(
+        path
+        for path in base.rglob("*")
+        if path.is_file() and path.suffix.lower() == ".md"
+    )
+
+
+def reference_dedup_key(reference: Any) -> Any:
+    """Collapse aliased spellings of one vault path to a single dedup key.
+
+    Uniqueness checks over declared references must treat ``./a/b.md``,
+    ``a//b.md``, and ``a/b.md`` as the same path; comparing raw strings would
+    let an alias slip a duplicate past the check. Non-strings are returned
+    unchanged so upstream type validation still fires.
+    """
+    if not isinstance(reference, str):
+        return reference
+    return PurePosixPath(reference).as_posix()
+
+
 def is_semver(value: Any) -> bool:
     return isinstance(value, str) and bool(SEMVER_RE.fullmatch(value))
 

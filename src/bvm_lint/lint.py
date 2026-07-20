@@ -14,10 +14,12 @@ from .util import (
     is_semver,
     is_sha256,
     is_utc,
+    iter_markdown_files,
     load_json,
     markdown_body,
     compare_semver,
     parse_utc,
+    reference_dedup_key,
     relative,
     safe_reference,
     semver_tuple,
@@ -42,6 +44,9 @@ REQUIRED_ARTIFACT_FIELDS = (
     "created_utc",
     "updated_utc",
 )
+# Stored in normalized form (see normalize_review_class): a self-review must
+# not qualify as an independent review even when spelled with off-case letters
+# or stray whitespace, so the reviewer_class is folded before this membership test.
 SELF_REVIEW_CLASSES = {"writer-self-check", "self", "same-writer"}
 OBJECT_MODES = {"canonical", "proxy", "mixed", "not-applicable"}
 HANDOFF_HEADING_GROUPS: dict[str, tuple[str, ...]] = {
@@ -52,6 +57,15 @@ HANDOFF_HEADING_GROUPS: dict[str, tuple[str, ...]] = {
     "proposed next actions": ("next action", "next actions", "proposed"),
     "stop conditions": ("stop condition", "stop conditions", "stop rule", "stop rules"),
 }
+
+
+def normalize_review_class(value: Any) -> str:
+    """Fold a reviewer_class the same way identities are compared elsewhere.
+
+    Uses the receipt_applicability_key idiom (casefold + strip + collapse
+    internal whitespace) so 'Self ', 'SELF', and 'self' resolve to one identity.
+    """
+    return re.sub(r"\s+", " ", str(value).strip().casefold())
 
 
 def receipt_applicability_key(receipt: dict[str, Any]) -> str:
@@ -173,7 +187,7 @@ class VaultLinter:
             base = self.root / directory
             if not base.is_dir():
                 continue
-            for path in sorted(base.rglob("*.md")):
+            for path in iter_markdown_files(base):
                 rel = relative(self.root, path)
                 try:
                     metadata = extract_metadata(path)
@@ -490,7 +504,10 @@ class VaultLinter:
         if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
             self.issue("BVM017", artifact.path, f"{field} must be an array of paths")
             return []
-        if len(value) != len(set(value)):
+        # Dedup on the normalized path key so aliased spellings of one path
+        # (./a.md, a//b.md, a/b.md) cannot smuggle a duplicate past the check.
+        dedup_keys = [reference_dedup_key(item) for item in value]
+        if len(dedup_keys) != len(set(dedup_keys)):
             self.issue("BVM018", artifact.path, f"{field} contains duplicate references")
         return value
 
@@ -538,7 +555,7 @@ class VaultLinter:
                         updated = parse_utc(artifact.metadata.get("updated_utc"))
                         if reviewed is not None and updated is not None and reviewed < updated:
                             self.issue("BVM026", artifact.path, f"review receipt predates the reviewed artifact bytes: {ref}")
-                        elif review.get("verdict") == "pass" and review.get("reviewer_class") not in SELF_REVIEW_CLASSES:
+                        elif review.get("verdict") == "pass" and normalize_review_class(review.get("reviewer_class")) not in SELF_REVIEW_CLASSES:
                             qualifying_reviews += 1
 
             if artifact.metadata.get("result") == "negative":
