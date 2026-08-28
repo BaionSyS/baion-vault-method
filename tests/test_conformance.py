@@ -210,6 +210,17 @@ class ConformanceTests(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         self.assertIn("BVM090", codes(lint_vault(root)))
 
+    def test_handoff_headings_inside_a_code_fence_do_not_satisfy_sections(self) -> None:
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        path = root / "HANDOFFS/tutorial-handoff-v0.1.0.md"
+        text = path.read_text(encoding="utf-8")
+        # A required heading demoted into a fenced code block is example text,
+        # not a real section: BVM090 must still fire (BVM-01 false closure).
+        self.assertIn("## Stop conditions", text)
+        text = text.replace("## Stop conditions", "```\n## Stop conditions\n```")
+        path.write_text(text, encoding="utf-8")
+        self.assertIn("BVM090", codes(lint_vault(root)))
+
     def test_path_escape_is_caught(self) -> None:
         tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
         path = root / "CANON/bounded-adapter-parity-v1.0.0.md"
@@ -613,6 +624,33 @@ class ConformanceTests(unittest.TestCase):
             metadata["supersedes"] = "CANON/bounded-adapter-parity-v1.0.0.md"
         update_metadata(path, mutate)
         self.assertIn("BVM041", codes(lint_vault(root)))
+
+
+    def test_self_review_class_bypass_via_case_and_whitespace_is_caught(self) -> None:
+        # A writer-self-check identity spelled with off-case letters and stray
+        # whitespace ("Self ") must still be treated as a self review, so the
+        # canon artifact loses its only qualifying non-self review (BVM031).
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        path = root / "RECEIPTS/reviews/independent-review-v1.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        data["reviewer_class"] = "Self "
+        path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        self.assertIn("BVM031", codes(lint_vault(root)))
+
+    def test_uppercase_markdown_extension_is_not_skipped(self) -> None:
+        # A managed file named with an uppercase .MD extension must still be
+        # discovered and linted; skipping it would let it escape metadata checks.
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        (root / "CANON" / "STRAY.MD").write_text("no bvm metadata block\n", encoding="utf-8")
+        self.assertIn("BVM010", codes(lint_vault(root)))
+
+    def test_aliased_duplicate_reference_is_caught(self) -> None:
+        # ./RECEIPTS/... and RECEIPTS/... name the same path; a raw-string dedup
+        # would miss the collision, so the alias must still trip BVM018.
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        path = root / "CANON/bounded-adapter-parity-v1.0.0.md"
+        update_metadata(path, lambda metadata: metadata["evidence"].append("./" + metadata["evidence"][0]))
+        self.assertIn("BVM018", codes(lint_vault(root)))
 
 
 if __name__ == "__main__":
