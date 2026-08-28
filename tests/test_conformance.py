@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import json
 import shutil
 import subprocess
@@ -54,10 +55,15 @@ class ConformanceTests(unittest.TestCase):
     def test_method_version_must_match_vault_schema_series(self) -> None:
         tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
         path = root / "vault.toml"
-        text = path.read_text(encoding="utf-8").replace(
-            'method_version = "0.1.0"',
+        # Mutate whatever in-series version is current; hardcoding the literal
+        # broke this test on every method-version bump (mutated nothing, then
+        # asserted about the unmutated vault).
+        text, n = re.subn(
+            r'method_version = "0\.1\.\d+"',
             'method_version = "0.2.0"',
+            path.read_text(encoding="utf-8"),
         )
+        self.assertEqual(1, n)
         path.write_text(text, encoding="utf-8")
         self.assertIn("BVM002", codes(lint_vault(root)))
 
@@ -289,13 +295,15 @@ class ConformanceTests(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
         template = root / "templates/vault.toml"
-        template.write_text(
-            template.read_text(encoding="utf-8").replace(
-                'method_version = "0.1.0"',
-                'method_version = "0.1.1"',
-            ),
-            encoding="utf-8",
+        # Drift = bump the template one patch ahead of whatever is current,
+        # so the test keeps making real drift after in-series version bumps.
+        text, n = re.subn(
+            r'method_version = "0\.1\.(\d+)"',
+            lambda m: f'method_version = "0.1.{int(m.group(1)) + 1}"',
+            template.read_text(encoding="utf-8"),
         )
+        self.assertEqual(1, n)
+        template.write_text(text, encoding="utf-8")
         completed = subprocess.run(
             [sys.executable, str(ROOT / "scripts/check_version_parity.py"), str(root)],
             check=False,
@@ -328,22 +336,22 @@ class ConformanceTests(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
         spec = root / "SPEC.md"
-        spec.write_text(
-            spec.read_text(encoding="utf-8").replace(
-                "**Version:** 0.1.0",
-                "**Version:** 0.2.0",
-            ),
-            encoding="utf-8",
+        text, n = re.subn(
+            r"\*\*Version:\*\* 0\.1\.\d+",
+            "**Version:** 0.2.0",
+            spec.read_text(encoding="utf-8"),
         )
+        self.assertEqual(1, n)
+        spec.write_text(text, encoding="utf-8")
         for vault_toml in ("templates/vault.toml", "examples/tutorial-vault/vault.toml"):
             path = root / vault_toml
-            path.write_text(
-                path.read_text(encoding="utf-8").replace(
-                    'method_version = "0.1.0"',
-                    'method_version = "0.2.0"',
-                ),
-                encoding="utf-8",
+            text, n = re.subn(
+                r'method_version = "0\.1\.\d+"',
+                'method_version = "0.2.0"',
+                path.read_text(encoding="utf-8"),
             )
+            self.assertEqual(1, n)
+            path.write_text(text, encoding="utf-8")
         completed = subprocess.run(
             [sys.executable, str(ROOT / "scripts/check_version_parity.py"), str(root)],
             check=False,

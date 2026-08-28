@@ -2,6 +2,33 @@
 
 All notable public changes are documented here.
 
+## [0.3.0] — released 2026-08-28
+
+Checker-tightening release. **v0.3.0 rejects vaults that v0.2.0 passed** — each
+case below was previously accepted silently; in-domain conforming vaults are
+unaffected.
+
+### Fixed
+
+- `bvm-lint` rejects unknown `vault.toml` keys with new diagnostic `BVM004`
+  instead of silently accepting them at `PASS`/exit 0 (issue #2). A key such as
+  `receipts_dir` previously read as configuration the checker had honoured.
+  `SPEC.md` §3 now states the closed key set explicitly (method v0.1.1: one
+  normative sentence added, same `0.1.x` series).
+- `reviewer_class` is case-folded before the self-review membership test, so
+  `"Self "` or `"SELF"` can no longer count as a qualifying independent review.
+- Managed Markdown discovery is case-insensitive on the file suffix: a file
+  named `NOTES.MD` no longer escapes linting.
+- Reference dedup normalizes path spelling, so `./a/b.md`, `a//b.md`, and
+  `a/b.md` cannot smuggle a duplicate reference past `BVM018`.
+- Fenced code blocks and HTML comments are stripped before the required-section
+  scan, so a heading inside a code example no longer satisfies a section
+  requirement (BVM-01).
+
+### Changed
+
+- CI actions bumped (actions/checkout 7.0.1, actions/setup-python 7.0.0).
+
 ## [0.2.0] — released 2026-07-16
 
 ### Added

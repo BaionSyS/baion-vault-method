@@ -5,12 +5,12 @@
 > **Agents may propose state. Receipts establish it.**
 
 [![Verify](https://github.com/BaionSyS/baion-vault-method/actions/workflows/verify.yml/badge.svg)](https://github.com/BaionSyS/baion-vault-method/actions/workflows/verify.yml)
-[![Version](https://img.shields.io/badge/version-0.2.0-5c677d)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.3.0-5c677d)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**Status:** v0.2.0, released 2026-07-16. The public tag [`v0.2.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.2.0) is the release record; [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) remains the record of the first cut.
+**Status:** v0.3.0, released 2026-08-28. Earlier public tags [`v0.2.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.2.0) and [`v0.1.0`](https://github.com/BaionSyS/baion-vault-method/releases/tag/v0.1.0) remain the records of the prior cuts.
 
-Two versions, on purpose: the **release version** (0.2.0) names what ships from this repository — checker, lab, docs. The **method version** (0.1.0, unchanged since the first release) names the specification contract in [`SPEC.md`](SPEC.md) that vaults declare conformance to via `method_version`. This release adds the Vault Lab; the method itself did not change.
+Two versions, on purpose: the **release version** (0.3.0) names what ships from this repository — checker, lab, docs. The **method version** (0.1.1) names the specification contract in [`SPEC.md`](SPEC.md) that vaults declare conformance to via `method_version`. This release tightens the checker and adds one normative sentence to the contract (`vault.toml` carries no undeclared keys); vaults declaring any `0.1.x` remain in-series.
 
 **Break it. Fix it. Try to beat it:** run [`lab/start.sh`](lab/README.md) — the Vault Lab, a five-case guided falsification run against the real checker.
 
