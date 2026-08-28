@@ -1,6 +1,6 @@
 # BAION Vault Method — Core Specification v0.1
 
-**Status:** method v0.1.0, released; public reference methodology. Ships in repository release v0.2.0 (see CHANGELOG.md); the method contract is unchanged since v0.1.0.
+**Status:** method v0.1.1, released; public reference methodology. Ships in repository release v0.3.0 (see CHANGELOG.md); the method contract last changed in v0.1.1, which closed the vault.toml key set (BVM004).
 
 **Version:** 0.1.1
 
