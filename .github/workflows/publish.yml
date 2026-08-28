@@ -1,0 +1,63 @@
+name: publish
+
+# Publishes the package to PyPI via Trusted Publishing (OIDC) — no long-lived
+# token exists anywhere. PyPI trusts this exact repository + workflow file +
+# environment, configured on pypi.org by the project owner. The `pypi`
+# environment carries a required-reviewer rule so every upload needs an
+# explicit human approval even after the release is cut.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Verify repository
+        run: ./verify_repo.sh
+      - name: Tag matches packaged version
+        # A tag like v0.3.0 must name the exact version the build will carry;
+        # publishing a mismatched pair would be unrecallable (PyPI versions
+        # are immutable).
+        if: github.event_name == 'release'
+        run: |
+          pkg_version=$(python -c "import tomllib;print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          tag="${{ github.event.release.tag_name }}"
+          test "v${pkg_version}" = "${tag}" || { echo "tag ${tag} != package v${pkg_version}"; exit 1; }
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: pypi
+      url: https://pypi.org/p/baion-vault-method
+    permissions:
+      id-token: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Build sdist and wheel
+        run: |
+          python -m pip install build
+          python -m build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2

@@ -79,7 +79,16 @@ The method is accompanied by anonymized operating reports that preserve real cat
 
 ## Quick start
 
-The checker requires Python 3.11 or newer and has no runtime dependencies outside the standard library.
+The checker requires Python 3.11 or newer and has no runtime dependencies outside the standard library. Install it from PyPI:
+
+```bash
+pipx install baion-vault-method
+bvm-lint --help
+```
+
+(`pip install baion-vault-method` works equally; `pipx` keeps the tool isolated.)
+
+Or work from a clone of this repository:
 
 ```bash
 python -m pip install -e .
