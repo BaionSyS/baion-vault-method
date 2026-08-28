@@ -129,6 +129,18 @@ class VaultLinter:
             self.issue("BVM002", path, "schema must be 'bvm-vault/0.1'")
         if not isinstance(config.get("name"), str) or not config.get("name", "").strip():
             self.issue("BVM002", path, "name must be a non-empty string")
+        # Unknown keys are rejected rather than ignored (BVM004). A checker
+        # that stays silent hands the author a PASS for a file it did not
+        # honour -- "receipts_dir" reads as configuration that took effect.
+        # Forward compatibility is the schema/method_version bump, not
+        # unstated lenience here.
+        for key in sorted(set(config) - {"schema", "name", "method_version"}):
+            self.issue(
+                "BVM004",
+                path,
+                f"unknown key '{key}': vault.toml declares only schema, name, "
+                "and method_version",
+            )
         method_version = config.get("method_version")
         if not is_semver(method_version):
             self.issue("BVM002", path, "method_version must be semantic versioning syntax")

@@ -45,7 +45,7 @@ ARCHIVE/
 
 `RECEIPTS` MAY be subdivided, but candidate snapshots used for promotion MUST be below `RECEIPTS/candidates/`.
 
-`vault.toml` MUST declare `schema = "bvm-vault/0.1"`, a non-empty vault `name`, and a Semantic Versioning `method_version` in the compatible `0.1.x` series. A later method series requires a corresponding schema and checker contract rather than silently claiming v0.1 conformance.
+`vault.toml` MUST declare `schema = "bvm-vault/0.1"`, a non-empty vault `name`, and a Semantic Versioning `method_version` in the compatible `0.1.x` series, and MUST NOT contain any other key. Unknown keys are a conformance error, not an extension point: a checker that ignored them would hand back a `PASS` for configuration it never honoured. A later method series requires a corresponding schema and checker contract rather than silently claiming v0.1 conformance.
 
 `INBOX` MAY contain unmanaged capture material. Markdown under `WORKING`, `CANON`, `HANDOFFS`, and `ARCHIVE` is managed and subject to this specification.
 

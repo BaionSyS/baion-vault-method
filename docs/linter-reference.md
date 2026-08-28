@@ -25,6 +25,7 @@ Exit status:
 | `BVM001` | A required BVM path is missing or has the wrong file type. |
 | `BVM002` | `vault.toml` is malformed, lacks required identity fields, or declares a method version outside the compatible `0.1.x` series. |
 | `BVM003` | `INDEX.json` is malformed or missing required index fields. |
+| `BVM004` | `vault.toml` contains a key outside the declared set (`schema`, `name`, `method_version`). Unknown keys are errors, not lenience: a silently ignored key reads as configuration the checker accepted. |
 | `BVM010` | Managed Markdown lacks a valid strict-JSON BVM metadata block. |
 | `BVM011` | Two artifacts use the same `artifact_id`. |
 | `BVM012` | An artifact declares an unknown state. |
