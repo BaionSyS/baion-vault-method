@@ -2,6 +2,7 @@ EXPLANATIONS: dict[str, str] = {
     "BVM001": "A required BVM path is missing or has the wrong file type.",
     "BVM002": "vault.toml is missing required fields or cannot be parsed.",
     "BVM003": "INDEX.json is malformed or missing required index fields.",
+    "BVM004": "vault.toml contains a key the specification does not define.",
     "BVM010": "Managed Markdown lacks valid strict-JSON BVM metadata.",
     "BVM011": "Two artifacts use the same artifact_id.",
     "BVM012": "An artifact metadata state is unknown.",

@@ -61,6 +61,20 @@ class ConformanceTests(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         self.assertIn("BVM002", codes(lint_vault(root)))
 
+    def test_unknown_vault_toml_key_is_rejected_not_ignored(self) -> None:
+        # The adoption trap from issue #2: the four managed directory names are
+        # fixed, a user guesses vault.toml is where that gets relaxed, writes
+        # "receipts_dir", and previously got PASS back for a key nothing read.
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        path = root / "vault.toml"
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write('receipts_dir = "MY_RECEIPTS"\n')
+        self.assertIn("BVM004", codes(lint_vault(root)))
+
+    def test_declared_vault_toml_keys_alone_stay_clean(self) -> None:
+        tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
+        self.assertNotIn("BVM004", codes(lint_vault(root)))
+
     def test_raw_json_evidence_source_is_not_misread_as_a_receipt(self) -> None:
         tmp, root = self.copy_example(); self.addCleanup(tmp.cleanup)
         (root / "RECEIPTS/data/raw-result.json").write_text('{"value": 1}\n', encoding="utf-8")
