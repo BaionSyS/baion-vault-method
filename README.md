@@ -16,7 +16,7 @@ Two versions, on purpose: the **release version** (0.3.0) names what ships from 
 
 BAION Vault Method (BVM) is a reference methodology for maintaining trustworthy project state when humans and AI agents work in the same file-based environment. It separates proposed work from accepted claims, requires addressable evidence before promotion, preserves corrections without erasing history, and ships an executable checker so structural conformance is a command rather than a feeling.
 
-BVM is **not** a consciousness claim, an AI-safety certification, a substitute for domain expertise, or a universal knowledge-management standard. Method v0.1.0 is a bounded reference method with a bounded checker.
+BVM is **not** a consciousness claim, an AI-safety certification, a substitute for domain expertise, or a universal knowledge-management standard. Method v0.1.1 is a bounded reference method with a bounded checker.
 
 ## Try to break it — the Vault Lab
 
